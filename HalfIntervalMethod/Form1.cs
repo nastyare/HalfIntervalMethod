@@ -34,12 +34,34 @@ namespace HalfIntervalMethod
                 }
             }
 
-            private double CalculateMinimum(double a, double b, double epsilon, string expression)
+        private double CalculateMinimum(double a, double b, double epsilon, string expression)
+        {
+
+            double middle;
+            double fm, fl;
+
+            double fa = CalculateFunctionValue(expression, a);
+            double fb = CalculateFunctionValue(expression, b);
+
+            while ((b - a) > epsilon)
             {
-                Random random = new Random();
+                middle = (a + b) / 2;
+                fm = CalculateFunctionValue(expression, middle);
+                fl = CalculateFunctionValue(expression, middle - epsilon);
+                if (fl < fm)
+                {
+                    b = middle;
+                }
+                else
+                {
+                    a = middle - epsilon;
+                }
+                /*Random random = new Random();
                 double minimum = a + random.NextDouble() * (b - a);
-                return minimum;
+                return minimum;*/
             }
+            return (a + b) / 2;
+        }
 
             private void PlotFunction(string expression, double a, double b)
             {
@@ -72,7 +94,6 @@ namespace HalfIntervalMethod
                 textBox4.Clear();
                 label1.Text = "";
                 chart.Series.Clear();
-            }
-        }
+            }       
     }
 }
