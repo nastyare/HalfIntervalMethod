@@ -10,8 +10,6 @@ namespace HalfIntervalMethod
 {
     public partial class Form1 : Form
     {
-        /*private double a, b, e, x;
-        private const double step = 0.01;*/
         public Form1()
         {
             InitializeComponent();
@@ -58,17 +56,6 @@ namespace HalfIntervalMethod
 
                 while (Math.Abs(b - a) > exp)
                 {
-                    /*double x1 = (a + b - exp) / 2;
-                    double x2 = (a + b + exp) / 2;
-
-                    if (Function(x1) < Function(x2))
-                    {
-                        b = x2;
-                    }
-                    else
-                    {
-                        a = x1;
-                    }*/
                     x = (b - a) / 2 + a;
 
                     if (Function(a) * Function(x) < 0)
@@ -89,12 +76,6 @@ namespace HalfIntervalMethod
                 MessageBox.Show("Что-то пошло не так");
             }
         }
-            /*x = a;
-
-            double pointXMin = Math.Round(Functions.Dychotomy(a, b, this.e), Math.Abs((int)Math.Log10(this.e)));
-            double pointYMin = Functions.Dychotomy(pointXMin);
-
-            labelCondition.Text += $"Минимум функции на отрезке [{a}; {b}]:\n\tx = {pointXMin}";*/       
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
