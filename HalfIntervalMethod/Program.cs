@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HalfIntervalMethod
-{
+namespace HalfIntervalMethod { 
     internal static class Program
     {
         /// <summary>
