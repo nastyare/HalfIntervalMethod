@@ -8,9 +8,6 @@ namespace HalfIntervalMethod
 {
     public partial class Form1 : Form
     {
-        private double a, b, exp, y, x;
-        private const double step = 0.01;
-
         public Form1()
         {
             InitializeComponent();
@@ -22,72 +19,88 @@ namespace HalfIntervalMethod
 
         private void calculateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!double.TryParse(textBoxA.Text, out a))
-            {
-                MessageBox.Show("a должна быть натуральным числомю");
-
-                return;
-            }
-
-            if (!double.TryParse(textBoxB.Text, out b))
-            {
-                MessageBox.Show("b должна быть натуральным числом");
-
-                return;
-            }
-
-            if (a > b)
-            {
-                MessageBox.Show("а должна быть меньше b");
-
-                return;
-            }
-
-            if (!double.TryParse(textBoxE.Text, out this.exp) || !Regex.IsMatch(textBoxE.Text, @"(1|10+)|(0,(1|0+1))")
-              || textBoxE.Text[0] == '-')
-            {
-                MessageBox.Show("e должна быть записана в десятичной форме через запятую");
-
-                return;
-            }
-            x = a;
-
-
-
+          
             try
             {
-                Function.Dychotomy(a, b, this.exp);
+                double a, b, exp;
+
+                if (!double.TryParse(textBoxA.Text, out a))
+                {
+                    MessageBox.Show("a должна быть натуральным числом");
+
+                    return;
+                }
+
+                if (!double.TryParse(textBoxB.Text, out b))
+                {
+                    MessageBox.Show("b должна быть натуральным числом");
+
+                    return;
+                }
+
+                if (a > b)
+                {
+                    MessageBox.Show("а должна быть меньше b");
+
+                    return;
+                }
+
+                if (!double.TryParse(textBoxE.Text, out exp) || !Regex.IsMatch(textBoxE.Text, @"(0|10+)|(0,(1|0+1))")
+                  || textBoxE.Text[0] == '-')
+                {
+                    MessageBox.Show("в десятичной форме e пишется через запятую");
+
+                    return;
+                }
+                this.chart.Series[0].Points.Clear();
+                double x = a;
+                double y;
+                while (x <= b)
+                {
+                    y = Fun(x);
+                    this.chart.Series[0].Points.AddXY(x, y);
+                    x += 0.1;
+                }
+                exp = (int)-Math.Log10(exp);
+                double res;
+                if (Fun(a) * Fun(b) <= 0)
+                {
+                    res = (a + b) / 2;
+
+                    while (Math.Abs(b - a) > Math.Pow(10, -exp))
+                    {
+                        double y1 = Fun(a), y2 = Fun(b), y3 = Fun(res);
+                        if (y1 * y3 < 0)
+                        {
+                            b = res;
+                        }
+                        else if (y2 * y3 < 0)
+                        {
+                            a = res;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        res = (a + b) / 2;
+
+                    }
+                    if ((27 - 18 * res + 2 * Math.Pow(res, 2)) * Math.Exp(-res / 3) < 0 + res && (27 - 18 * res + 2 * Math.Pow(res, 2)) * Math.Exp(-res / 3) > 0 - res)
+                    {
+                        textBox1.Text = $"{res:F4}" ;
+                    }
+                }
+                else
+                {
+                   MessageBox.Show("Нет корней на этом интервале или их больше одного");
+                }
             }
+
             catch (Exception)
             {
                 MessageBox.Show("Что-то пошло не так");
 
                 return;
-            }
-
-            double pointX;
-
-            try
-            {
-                pointX = Math.Round((double)Function.Dychotomy(a, b, this.exp), Math.Abs((int)Math.Log10(this.exp)));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Что-то пошло не так");
-
-                return;
-            }
-            textBox1.Text = $"{pointX}";
-            while (x <= b)
-            {
-                y = Fun(x);
-                this.chart.Series[0].Points.AddXY(x, y);
-                x += 0.1;
-            }
-            {
-                y = Fun(x);
-                this.chart.Series[0].Points.AddXY(x, y);
-                x += 0.1;
             }
         }
 
@@ -109,7 +122,7 @@ namespace HalfIntervalMethod
                 {
                     x = (b - a) / 2 + a;
 
-                    if (Fun(a) * Fun(x) < 0)
+                    if (Fun(a) * Fun(x) <= 0)
                     {
                         b = x;
                     }

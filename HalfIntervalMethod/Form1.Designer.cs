@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms.DataVisualization.Charting;
+﻿using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace HalfIntervalMethod
 {
@@ -63,8 +64,8 @@ namespace HalfIntervalMethod
             this.chart.Size = new System.Drawing.Size(612, 309);
             this.chart.TabIndex = 8;
             this.chart.Text = "chart1";
-           /* title2.Name = "Title1";
-            title2.Text = "По формуле (27 - 18x+2x^2)*e^(-x/3)";*/
+            /* title2.Name = "Title1";
+             title2.Text = "По формуле (27 - 18x+2x^2)*e^(-x/3)";*/
             //this.chart.Titles.Add(title2);
             // 
             // menuStrip3
@@ -155,6 +156,8 @@ namespace HalfIntervalMethod
             this.textBoxE.Name = "textBoxE";
             this.textBoxE.Size = new System.Drawing.Size(110, 37);
             this.textBoxE.TabIndex = 18;
+            this.textBox1.ContextMenu = new ContextMenu();
+            this.textBox1.ShortcutsEnabled = false;
             // 
             // label1
             // 
@@ -172,6 +175,8 @@ namespace HalfIntervalMethod
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 35);
             this.textBox1.TabIndex = 21;
+            this.textBox1.ContextMenu = new ContextMenu();
+            this.textBox1.ShortcutsEnabled = false;
             // 
             // Form1
             // 
@@ -214,3 +219,4 @@ namespace HalfIntervalMethod
         private System.Windows.Forms.TextBox textBox1;
     }
 }
+
